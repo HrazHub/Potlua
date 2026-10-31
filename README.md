@@ -1,3 +1,4 @@
+[README.md](https://github.com/user-attachments/files/34214315/README.md)
 # potlua
 
 A lightweight Windows desktop app for browsing your Steam library, backing up manifests, verifying game files, and scanning installed games for tampering.
@@ -16,10 +17,26 @@ Built with Python and Tkinter. Ships as a single portable executable — no inst
 - **Manifest backup** — export every `appmanifest_*.acf` to a timestamped folder before a reinstall or drive move.
 - **Portable** — one `.exe`, nothing to install.
 
-## Requirements
+## Supported platforms
 
-- Windows 10 or 11 (64-bit)
-- Steam installed (the app locates it via the registry, with fallback paths)
+| Platform | Support | Notes |
+| --- | --- | --- |
+| Windows 11 (64-bit) | Supported | Primary target. |
+| Windows 10 (64-bit) | Supported | Fully supported. |
+| Windows 10 / 11 (32-bit) | Not supported | The build is 64-bit only. |
+| Windows 8.1 / 7 | Not supported | Untested and not maintained. |
+| Linux | Coming November 3, 2026 | Linux build planned; current builds are Windows-only. |
+| macOS | Coming November 5, 2026 | macOS build planned; current builds are Windows-only. |
+| Steam Deck (SteamOS / Linux) | Planned | Linux support is planned for November 3, 2026. |
+| WSL | Not supported | GUI and Steam detection are Windows-only. |
+
+> The Linux version is planned for **November 3, 2026**, and the macOS version for **November 5, 2026**. Until then, the app requires Windows.
+
+### Requirements
+
+- Windows 10 or 11, 64-bit
+- Steam installed locally (found via the registry, with fallback paths)
+- No administrator rights required
 
 ## Install
 
@@ -116,7 +133,6 @@ No game files are written to, and nothing is uploaded anywhere.
 
 ## Limitations
 
-- Windows only (uses `winreg` and `os.startfile`).
 - Integrity detection is signature-based and may produce false positives or miss newer tooling.
 - Uninstalled games without an `appmanifest` are not listed.
 - Games installed outside a Steam library are not detected.
