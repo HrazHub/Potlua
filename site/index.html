@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>potlua - Steam Library Manager by Hrazhub</title>
+<meta name="description" content="potlua is a lightweight Windows app to browse your Steam library, back up manifests, verify game files and scan installs for tampering. Free download by Hrazhub.">
+<style>
+  :root {
+    --bg: #1e2228;
+    --panel: #262b33;
+    --panel-2: #2f3540;
+    --text: #e6e9ef;
+    --muted: #9aa4b2;
+    --accent: #4f8cff;
+    --accent-2: #7fb0ff;
+    --green: #57c785;
+    --red: #ff6b6b;
+    --yellow: #f0b429;
+    --radius: 14px;
+    --max: 1080px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: radial-gradient(1200px 600px at 50% -10%, #2b3444 0%, var(--bg) 55%);
+    color: var(--text);
+    font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  a { color: var(--accent-2); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 0;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.15rem; }
+  .logo {
+    width: 34px; height: 34px; border-radius: 9px;
+    background: linear-gradient(135deg, var(--accent), #8a5cff);
+    display: grid; place-items: center; color: #fff; font-weight: 800;
+  }
+  .brand small { color: var(--muted); font-weight: 500; margin-left: 6px; }
+  nav { display: flex; gap: 20px; font-size: .95rem; }
+  nav a { color: var(--muted); }
+  nav a:hover { color: var(--text); text-decoration: none; }
+
+  .hero { text-align: center; padding: 56px 0 40px; }
+  .badge {
+    display: inline-block; padding: 5px 12px; border-radius: 999px;
+    background: rgba(79,140,255,.14); color: var(--accent-2);
+    font-size: .8rem; letter-spacing: .04em; text-transform: uppercase; font-weight: 600;
+  }
+  .hero h1 { font-size: clamp(2.1rem, 5vw, 3.4rem); margin: 18px 0 12px; letter-spacing: -.02em; }
+  .hero h1 span { background: linear-gradient(90deg, var(--accent), #b07cff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero p { color: var(--muted); max-width: 640px; margin: 0 auto 28px; font-size: 1.05rem; }
+  .btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 13px 24px; border-radius: 10px; font-weight: 600; font-size: 1rem;
+    border: 1px solid transparent; cursor: pointer; transition: transform .15s, background .15s;
+  }
+  .btn:hover { text-decoration: none; transform: translateY(-1px); }
+  .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 10px 30px rgba(79,140,255,.28); }
+  .btn-primary:hover { background: #3f7cf5; }
+  .btn-ghost { background: var(--panel); color: var(--text); border-color: #3a414d; }
+  .btn-ghost:hover { background: var(--panel-2); }
+  .meta { margin-top: 16px; color: var(--muted); font-size: .85rem; }
+  .meta b { color: var(--text); font-weight: 600; }
+
+  section { padding: 44px 0; }
+  .section-title { font-size: 1.5rem; margin: 0 0 6px; }
+  .section-sub { color: var(--muted); margin: 0 0 26px; }
+  .shot-frame {
+    background: var(--panel); border: 1px solid #333a45; border-radius: var(--radius);
+    padding: 10px; box-shadow: 0 30px 80px rgba(0, 0, 0, .45);
+  }
+  .shot-frame img { width: 100%; display: block; border-radius: 8px; }
+  .shot-cap { color: var(--muted); font-size: .85rem; text-align: center; margin: 12px 0 0; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+  .card {
+    background: linear-gradient(180deg, var(--panel), #232830);
+    border: 1px solid #333a45; border-radius: var(--radius); padding: 20px;
+  }
+  .card h3 { margin: 0 0 8px; font-size: 1.02rem; display: flex; align-items: center; gap: 9px; }
+  .card p { margin: 0; color: var(--muted); font-size: .93rem; }
+  .ico {
+    width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center;
+    background: rgba(79,140,255,.15); color: var(--accent-2); flex: 0 0 auto;
+  }
+
+  .download-card {
+    background: linear-gradient(145deg, #2a3346, #21262f);
+    border: 1px solid #38414f; border-radius: 18px; padding: 28px;
+    display: flex; gap: 26px; align-items: center; justify-content: space-between; flex-wrap: wrap;
+  }
+  .download-card h3 { margin: 0 0 6px; font-size: 1.25rem; }
+  .download-card p { margin: 0; color: var(--muted); font-size: .92rem; }
+  .req { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 12px; color: var(--muted); font-size: .85rem; }
+  .req span::before { content: "•"; color: var(--accent); margin-right: 8px; }
+  .note { color: var(--muted); font-size: .82rem; margin-top: 14px; }
+
+  .scan-demo {
+    background: #20252d; border: 1px solid #333a45; border-radius: var(--radius); padding: 18px;
+    font-family: Consolas, "Cascadia Mono", monospace; font-size: .86rem; overflow-x: auto;
+  }
+  .scan-line { display: flex; justify-content: space-between; gap: 20px; padding: 6px 0; border-bottom: 1px solid #2b313b; }
+  .scan-line:last-child { border-bottom: 0; }
+  .ok { color: var(--green); } .sus { color: var(--red); } .mod { color: var(--yellow); }
+
+  footer { border-top: 1px solid #2c323c; padding: 26px 0 40px; color: var(--muted); font-size: .85rem; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  @media (max-width: 640px) { nav { display: none; } .hero { padding-top: 36px; } }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">p</div>
+        <span>potlua <small>by Hrazhub</small></span>
+      </div>
+      <nav>
+        <a href="#preview">Preview</a><a href="#features">Features</a>
+        <a href="#integrity">Integrity Scan</a>
+        <a href="#download">Download</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <span class="badge">Windows 10 / 11 &middot; 64-bit</span>
+        <h1>Your Steam library, <span>under control</span></h1>
+        <p>potlua is a lightweight desktop app that lists every installed Steam game across all your libraries, backs up manifests, verifies files and flags tampered installs.</p>
+        <div class="btns">
+          <a class="btn btn-primary" href="downloads/potlua.exe" download>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download for Windows
+          </a>
+          <a class="btn btn-ghost" href="#features">See features</a>
+        </div>
+        <div class="meta"><b>Free</b> &middot; <b>portable exe</b> &middot; no installer &middot; ~10 MB</div>
+      </section>
+
+      <section id="preview">
+        <h2 class="section-title">Take a look</h2>
+        <p class="section-sub">The real app, not a mockup.</p>
+        <div class="shot-frame">
+          <img src="assets/screenshot.png" alt="potlua main window listing Steam games with size, status and integrity columns" loading="lazy">
+        </div>
+        <p class="shot-cap">Game list, size, status and integrity results in one view.</p>
+      </section>
+
+      <section id="features">
+        <h2 class="section-title">Everything in one window</h2>
+        <p class="section-sub">Built for people who keep a big library and want it tidy.</p>
+        <div class="grid">
+          <div class="card">
+            <h3><span class="ico">&#9881;</span> Auto library detection</h3>
+            <p>Finds your Steam install and every extra library folder via <code>libraryfolders.vdf</code> automatically.</p>
+          </div>
+          <div class="card">
+            <h3><span class="ico">&#9776;</span> Full library overview</h3>
+            <p>Name, AppID, size on disk, install status and last update time, with search and sortable columns.</p>
+          </div>
+          <div class="card">
+            <h3><span class="ico">&#10003;</span> Integrity scan</h3>
+            <p>Detects emulator DLLs, release-group files and tampered <code>steam_api</code> builds, with per-finding severity.</p>
+          </div>
+          <div class="card">
+            <h3><span class="ico">&#9654;</span> Quick actions</h3>
+            <p>Launch, request file verification, open the install folder or manifest, and copy AppIDs in one click.</p>
+          </div>
+          <div class="card">
+            <h3><span class="ico">&#128190;</span> Manifest backup</h3>
+            <p>Export every <code>appmanifest_*.acf</code> to a timestamped folder before you reinstall or move drives.</p>
+          </div>
+          <div class="card">
+            <h3><span class="ico">&#9889;</span> No dependencies</h3>
+            <p>A single portable executable. No installer, no background service, no account login.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="integrity">
+        <h2 class="section-title">Integrity Scan</h2>
+        <p class="section-sub">Heuristic checks against common emulator and release-group artifacts.</p>
+        <div class="scan-demo">
+          <div class="scan-line"><span>Counter-Strike 2</span><span class="ok">No indicators</span></div>
+          <div class="scan-line"><span>Some Game</span><span class="mod">Modified &middot; RUNE.ini</span></div>
+          <div class="scan-line"><span>Another Game</span><span class="sus">Suspicious &middot; steam_api64.dll emulator</span></div>
+        </div>
+      </section>
+
+      <section id="download">
+        <div class="download-card">
+          <div>
+            <h3>Download potlua</h3>
+            <p>Portable build &middot; no installation needed. Just run the exe.</p>
+            <div class="req">
+              <span>Windows 10 / 11</span>
+              <span>64-bit</span>
+              <span>~10 MB</span>
+              <span>No install</span>
+            </div>
+            <p class="note">Only reads your local Steam files. It does not download, unlock or modify games.</p>
+          </div>
+          <div>
+            <a class="btn btn-primary" href="downloads/potlua.exe" download>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download potlua.exe
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>potlua &copy; <span id="year">2026</span> Hrazhub</span>
+      <span>Not affiliated with Valve Corporation</span>
+    </footer>
+  </div>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
