@@ -21,19 +21,8 @@ Built with Python and Tkinter. Ships as a single portable executable — no inst
 - **Portable** — one `.exe`, nothing to install.
 
 ## Supported platforms
+## OUTDATE NO MORE SUPPORT PLATFORM EXECPT WINDOWS 10 AND WINDOWS 11 64BIT
 
-| Platform | Support | Notes |
-| --- | --- | --- |
-| Windows 11 (64-bit) | Supported | Primary target. |
-| Windows 10 (64-bit) | Supported | Fully supported. |
-| Windows 10 / 11 (32-bit) | Not supported | The build is 64-bit only. |
-| Windows 8.1 / 7 | Not supported | Untested and not maintained. |
-| Linux | Coming November 3, 2026 | Linux build planned; current builds are Windows-only. |
-| macOS | Coming November 5, 2026 | macOS build planned; current builds are Windows-only. |
-| Steam Deck (SteamOS / Linux) | Planned | Linux support is planned for November 3, 2026. |
-| WSL | Not supported | GUI and Steam detection are Windows-only. |
-
-> The Linux version is planned for **November 3, 2026**, and the macOS version for **November 5, 2026**. Until then, the app requires Windows.
 
 ### Requirements
 
