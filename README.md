@@ -1,5 +1,7 @@
 # bad news
-# POTLUA OFFICIALY OUTDATE BECAUSE NO MORE DEVOLOPER TO HANDEL THE POTLUA WE PROMISED NEXT WEEK OR TOMMOROW WILL REALESE A NEW APP STAY TUNED
+# POTLUA OFFICIALY OUTDATE BECAUSE NO MORE DEVOLOPER TO HANDEL THE POTLUA WE PROMISED NEXT WEEK OR TOMMOROW WILL REALESE A NEW APP STAY TUNED ALSO WEBSITE LINK ARE DELETED SO IF YOU WANT DOWNLOAD IT JUST DOWNLOAD USE TERMINAL
+# we are working new ai key provider name : startum
+# thanks for all for support 
 # potlua
 
 A lightweight Windows desktop app for browsing your Steam library, backing up manifests, verifying game files, and scanning installed games for tampering.
@@ -65,9 +67,8 @@ $d="$env:LOCALAPPDATA\potlua"; Remove-Item "$d\potlua.exe" -Force -ErrorAction S
 
 ### Manual download
 
-Get the latest portable build from the official site:
-
-**[potlua.netlify.app](https://potlua.netlify.app)**
+Link are delete read above for more info 
+if you want download it use terminal
 
 Run it directly. Nothing is installed and no files are modified.
 
