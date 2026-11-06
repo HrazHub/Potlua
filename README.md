@@ -3,6 +3,7 @@
 # POTLUA OFFICIALY OUTDATE BECAUSE NO MORE DEVOLOPER TO HANDEL THE POTLUA WE PROMISED NEXT WEEK OR TOMMOROW WILL REALESE A NEW APP STAY TUNED ALSO WEBSITE LINK ARE DELETED SO IF YOU WANT DOWNLOAD IT JUST DOWNLOAD USE TERMINAL
 # we are working new ai key provider name : startum
 # thanks for all for support 
+## sorry yall
 # potlua
 
 A lightweight Windows desktop app for browsing your Steam library, backing up manifests, verifying game files, and scanning installed games for tampering.
