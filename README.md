@@ -9,7 +9,8 @@ A lightweight Windows desktop app for browsing your Steam library, backing up ma
 
 Built with Python and Tkinter. Ships as a single portable executable — no installer, no background service, no account login.
 
-![potlua screenshot](site/assets/screenshot.png)
+
+
 
 ## Features
 
